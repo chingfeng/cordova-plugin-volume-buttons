@@ -146,32 +146,17 @@ public class VolumeButtonsListener extends CordovaPlugin implements OnKeyListene
 		// Check if the event is equal to KEY_DOWN
 		if( keyEvent.getAction() == KeyEvent.ACTION_DOWN )
 		{
-			// Check what button has been pressed
-			if( keyCode == KeyEvent.KEYCODE_VOLUME_UP ){
 
-				// Create a new JSONObject with the information and send it
-				JSONObject info= new JSONObject();
-				try{
-					info.put("signal", new String("volume-up"));
-					sendSignal(info, true);
-					return true;
-				}
-				catch(JSONException ex){
-					Log.e(VolumeButtonsListener_LOG, ex.getMessage());
-				}
+			JSONObject info= new JSONObject();
+			try{
+				info.put("key_code", keyCode);
+				info.put("vendor_id", keyEvent.getDevice().getVendorId());
+				info.put("product_id", keyEvent.getDevice().getProductId());
+				sendSignal(info, true);
+				return true;
 			}
-			else if( keyCode == KeyEvent.KEYCODE_VOLUME_DOWN  ){
-
-				// Create a new JSONObject with the information and send it
-				JSONObject info= new JSONObject();
-				try{
-					info.put("signal", new String("volume-down"));
-					sendSignal(info, true);
-					return true;
-				}
-				catch(JSONException ex){
-					Log.e(VolumeButtonsListener_LOG, ex.getMessage());
-				}
+			catch(JSONException ex){
+				Log.e(VolumeButtonsListener_LOG, ex.getMessage());
 			}
 		}
 
